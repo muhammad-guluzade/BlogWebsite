@@ -1,6 +1,7 @@
 # Blog Website
 
 **This website is only to experiment with registering and logging in.**
+
 A simple **Flask** application that implements user authentication and grants special rights to certain users using PostgreSQL database.
 
 Types of Users
