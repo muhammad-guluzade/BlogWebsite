@@ -1,7 +1,6 @@
 # Blog Website
 
-## Link
-[Blog Website](https://blogwebsite-a253.onrender.com/)
+## [Blog Website](https://blogwebsite-a253.onrender.com/)
 
 **This website is only to experiment with registering and logging in.**
 
