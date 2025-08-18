@@ -14,6 +14,3 @@ This user has the rights to create, modify, and delete the posts on the blog web
 This user has the rights to comment the posts which were posted by admin user.
 ### Unregistered User
 This user can only read the posts posted by admin user.
-
-## Important note about the website functionality
-Since I use free version of Render to keep hosting this website, the requests to the website can be delayed for 1 minute. The reason behind this issue is that Render shuts down the website's server as soon as it remains unused for 15 minutes, which makes it necessary to run the server code again when receiving another request.
