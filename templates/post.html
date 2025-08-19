@@ -2,23 +2,28 @@
 {% include "header.html" %}
 
 <!-- Page Header-->
-<header class="masthead" style="background-image: url('{{post.img_url}}')">
+<header class="masthead" style="background-image: url('{{post[-1]}}')">
   <div class="container position-relative px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
         <div class="post-heading">
-          <h1>{{ post.title }}</h1>
-          <h2 class="subheading">{{ post.subtitle }}</h2>
+          <h1>{{ post[2] }}</h1>
+          <h2 class="subheading">{{ post[3] }}</h2>
           <span class="meta"
             >Posted by
             <!-- Changed from post.author -->
-            <a href="#">{{ post.author.name }}</a>
-            on {{ post.date }}
+            <a href="#">{{ author_name }}</a>
+            on {{ post[4] }}
           </span>
         </div>
       </div>
     </div>
   </div>
+  <style>
+      .cke_notification_warning {
+      display: none !important;
+  }
+  </style>
 </header>
 
 <!-- Post Content -->
@@ -26,13 +31,14 @@
   <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
-        {{ post.body|safe }}
+        {{ post[5]|safe }}
         <!--Only show Edit Post button if user id is 1 (admin user) -->
-        {% if current_user.id == 1 %}
+
+        {% if 'id' in session and session['id'] == post[1] %}
         <div class="d-flex justify-content-end mb-4">
           <a
             class="btn btn-primary float-right"
-            href="{{url_for('edit_post', post_id=post.id)}}"
+            href="{{url_for('edit_post', post_id=post_id)}}"
             >Edit Post</a
           >
         </div>
@@ -48,16 +54,16 @@
         <div class="comment">
           <ul class="commentList">
             <!-- Show all comments -->
-            {% for comment in post.comments: %}
+            {% for comment in comments: %}
             <li>
               <div class="commenterImage">
                 <img
-                  src="{{ comment.comment_author.email | gravatar }}"
+                  src="{{ comment[0] | gravatar }}"
                 />
               </div>
               <div class="commentText">
-                {{comment.text|safe}}
-                <span class="sub-text">{{comment.comment_author.name}}</span>
+                {{comment[0]|safe}}
+                <span class="sub-text">{{comment[1]}}</span>
               </div>
             </li>
             {% endfor %}
@@ -68,5 +74,11 @@
     </div>
   </div>
 </article>
+
+<script src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"></script>
+<script>
+    // Replace the textarea with CKEditor
+    CKEDITOR.replace('comment_text');  // Use your field's actual id
+</script>
 
 {% include "footer.html" %}
