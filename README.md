@@ -1,7 +1,9 @@
 
-# [Blog Website](https://blogwebsite-a253.onrender.com/)
+# [Blog Website](http://amalai320.pythonanywhere.com/)
 
-A simple **Flask** application that implements user authentication and grants special rights to certain users using PostgreSQL database.
+A simple **Flask** application that implements user authentication and grants special rights to certain users using SQLite3 database.
+
+This is one of the important milestones I have rached, since this project helped me a lot when I was working on Latte (see my GitHub repos), giving solid foundation in understanding REST APIs, User Authentication, Flask Apps, Backend-Frontend Communication, Database Integration, and Web Development in general.
 
 Types of Users
 - **Admin user** (the first one to register, or the user with id 1 in the database)
