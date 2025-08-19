@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Encryption/Decryption</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            overflow: hidden; /* Prevent body from scrolling */
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px; /* Set a max width for better readability */
+            text-align: center;
+            overflow-y: auto; /* Allow scrolling if the content overflows */
+            height: 100%; /* Make sure container takes up full available height */
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        input[type="file"],
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        input[type="radio"] {
+            margin: 10px;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .button:disabled {
+            background-color: #aaa;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+
+        .image-preview {
+            margin-top: 20px;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .save-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        /* Ensure responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+        }
+    </style>
+
+</head>
+<body>
+
+    <form enctype="multipart/form-data" class="container" method="post" action="/encrypt_decrypt_images">
+        <h2>Image Encryption/Decryption</h2>
+
+        <!-- Image upload -->
+        <input name="image" type="file" id="imageInput" accept="image/*">
+
+        <!-- Radio buttons for selecting encryption or decryption -->
+        <div>
+            <label>
+                <input type="radio" name="action" value="encrypt" id="encryptRadio" checked> Encrypt
+            </label>
+            <label>
+                <input type="radio" name="action" value="decrypt" id="decryptRadio"> Decrypt
+            </label>
+        </div>
+
+        <!-- Password input -->
+        <input name="password" type="text" id="passwordInput" placeholder="Enter password (8 chars)">
+        <div id="passwordError" class="error"></div>
+
+        <!-- Action button (Encrypt or Decrypt) -->
+        <button type="submit" id="actionButton" class="button" disabled>Encrypt</button>
+
+        <!-- Image preview -->
+        {% if converted_image %}
+            <div class="image-preview" id="imagePreview">
+                <h3>Processed Image</h3>
+                <img id="previewImage" src="{{ converted_image }}" alt="Processed Image">
+                <a href="{{ converted_image }}" id="saveButton" class="save-button" download>Save Image</a>
+            </div>
+        {% endif %}
+    </form>
+
+    <script>
+
+        // Password validation
+        const passwordInput = document.getElementById('passwordInput');
+        const passwordError = document.getElementById('passwordError');
+        const actionButton = document.getElementById('actionButton');
+        const encryptRadio = document.getElementById('encryptRadio');
+        const decryptRadio = document.getElementById('decryptRadio');
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewImage = document.getElementById('previewImage');
+        const saveButton = document.getElementById('saveButton');
+
+        // Validating the password input
+        function validatePassword() {
+            const password = passwordInput.value;
+            const regex = /^[A-Za-z0-9]{8}$/; // Only letters and digits, exactly 8 characters
+            if (password.length !== 8) {
+                passwordError.textContent = "Password must be exactly 8 characters long.";
+                actionButton.disabled = true;
+            } else if (!regex.test(password)) {
+                passwordError.textContent = "Password can only contain english letters and numbers.";
+                actionButton.disabled = true;
+            } else {
+                passwordError.textContent = "";
+                actionButton.disabled = false;
+            }
+        }
+
+        passwordInput.addEventListener('input', validatePassword);
+
+        // Set the action text based on selected radio button
+        function setActionButtonText() {
+            if (encryptRadio.checked) {
+                actionButton.textContent = "Encrypt";
+            } else {
+                actionButton.textContent = "Decrypt";
+            }
+        }
+
+        encryptRadio.addEventListener('change', setActionButtonText);
+        decryptRadio.addEventListener('change', setActionButtonText);
+
+    </script>
+
+</body>
+</html>
