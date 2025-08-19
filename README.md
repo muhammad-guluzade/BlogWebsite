@@ -11,8 +11,8 @@ Types of Users
 - **Unregistered user** (the user who is not registered)
 
 ### Admin User
-This user has the rights to create, modify, and delete the posts on the blog website. 
+This user has the rights to view, create, modify, and delete all of the posts on the blog website. 
 ### Registered User
-This user has the rights to comment the posts which were posted by admin user.
+This user has the right to create their own posts with descriptions and images they chose from the web, as well as delete their posts and see the posts of others.
 ### Unregistered User
-This user can only read the posts posted by admin user.
+This user can only read the posts posted by admin or registered users.
