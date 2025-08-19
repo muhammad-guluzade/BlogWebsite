@@ -38,6 +38,12 @@
       href="{{ url_for('static', filename='css/styles.css') }}"
       rel="stylesheet"
     />
+    <style>
+      .cke_notification_warning {
+          display: none !important;
+      }
+    </style>
+
     {% endblock %}
   </head>
   <body>
@@ -67,7 +73,7 @@
               >
             </li>
             <!-- Only show Login/Register if user is logged out. Otherwise show "Log Out" -->
-            {% if not current_user.is_authenticated: %}
+            {% if 'id' not in session: %}
             <li class="nav-item">
               <a
                 class="nav-link px-lg-3 py-3 py-lg-4"
